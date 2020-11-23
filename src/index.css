@@ -91,3 +91,42 @@ code {
   background: #309E90;
   font-weight: 600;
 }
+
+.footer{
+  width: 100%;
+  background: #009688;
+  height: 100px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination{
+  border-radius: 10px;
+  width: 150px;
+  height: 50px;
+  background: #006E60;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.paginationItem{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #0F7D6F;
+  color: #fff;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.paginationItemActive{
+  background: #309E90;
+  font-weight: 600;
+}

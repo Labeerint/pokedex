@@ -2,9 +2,10 @@ import axios from 'axios'
 import {SET_POKEMON_PAGE_INFO, SET_POKEMONS} from "./constants";
 
 
-export const fetchPokemons = (limit) => dispatch => {
+export const fetchPokemons = (limit, page) => dispatch => {
     console.log('limit', limit)
-    axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=20`)                  // получаем массив данных с именами покемонов
+    console.log('page', page)
+    axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${page}`)                  // получаем массив данных с именами покемонов
         .then(({data})=>{
             dispatch(setPokemons(data.results))                                 // засовываем их в стейт
             return data

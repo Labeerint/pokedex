@@ -3,6 +3,7 @@ import {SET_POKEMON_PAGE_INFO, SET_POKEMONS} from "./constants";
 const initialState = {
     pokemons: [],
     currentPokemonsPageInfo: [{name: 'gandon'}],
+
 }
 
 
