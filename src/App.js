@@ -4,7 +4,7 @@ import {
     changeDisplayMode, changeStartPosition,
     displayPokemons,
     fetchData,
-    fetchPokemons,
+    fetchPokemons, fetchPokemonsByTypes, fetchTypes,
     searchPokemons,
     vydacha
 } from "./redux/PokemonAction";
@@ -13,6 +13,9 @@ import Quantity from "./components/ Quantity";
 import Pagination from "./components/Pagination";
 import Search from "./components/Search";
 import pokemonReducer from "./redux/PokemonReducer";
+import FiltersItem from "./components/FiltersItem";
+
+let selectTypes = []
 
 function App() {
 
@@ -20,14 +23,39 @@ function App() {
     const [currentQuantity, setCurrentQuantity] = React.useState(10)
     const [step, setStep] = React.useState(10)
     const [searchItem, setSearchItem] = React.useState('')
+    const [currentType, setCurrentType] = React.useState([])
     const startPosition = useSelector((pokemonReducer)=> pokemonReducer.startPosition)
     const quantity = [10, 20, 50]
 
     React.useEffect(()=> {
         dispatch(fetchData())
+        dispatch(fetchTypes())
     },[])
 
+    const onSelectType = (elem, type) =>{
+      // let newArr = []
+      if(elem.current.checked){
+            selectTypes.push(type)
+            console.log('selectTypes', selectTypes)
+            dispatch(fetchPokemonsByTypes(selectTypes, currentQuantity))
+            dispatch(changeStartPosition(0))
+            // newArr = [...currentType,type]
+            // setCurrentType(newArr)
 
+      }else if(selectTypes.length > 1) {
+          selectTypes = selectTypes.filter(value => value !== type)
+          console.log('222', selectTypes)
+          dispatch(fetchPokemonsByTypes(selectTypes, currentQuantity))
+          dispatch(changeStartPosition(0))
+      }else {
+            selectTypes = selectTypes.filter(value => value !== type)
+            dispatch(changeStartPosition(0))
+            dispatch(changeDisplayMode('normal'))
+            dispatch(displayPokemons(0,currentQuantity))
+        }
+
+
+    }
 
     const onSearchInput = (newSearchItem) =>{
       console.log(newSearchItem)
@@ -73,6 +101,8 @@ function App() {
   // },[dispatch, currentQuantity, page])
 
     const pokemons = useSelector((pokemonReducer)=> pokemonReducer.pokemons)
+    const filters = useSelector((pokemonReducer)=>pokemonReducer.filters)
+    console.log('filters', filters)
     // const afterSearchData = useSelector((pokemonReducer)=>pokemonReducer.afterSearchData)
     // console.log('afterSearchData', afterSearchData)
 
@@ -87,11 +117,16 @@ function App() {
                     onCahngeQuantity={(newQuantity)=>changeCurrentQuantity(newQuantity)}/>
       </div>
       <div className="home">
-        <div className="filters"></div>
+        <div className="filters">
+            {
+                filters.length !== 0 &&
+                    filters.map(filter => <FiltersItem onSelectType={(elem, type)=>onSelectType(elem, type)} key={filter.name} name={filter.name} />)
+            }
+        </div>
         <div className="pokemons">
             {
                 pokemons.length !== 0 && pokemons.map((item, index)=>{
-                        return <PokemonCard key={item.name} name={item.name}/>
+                        return <PokemonCard key={item.name ? item.name : item} name={item.name ? item.name : item}/>
                 })
             }
         </div>

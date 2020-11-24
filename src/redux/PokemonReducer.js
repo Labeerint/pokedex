@@ -3,8 +3,8 @@ import {
     CHANGE_START_POSITION,
     DISPLAY_POKEMONS,
     SEARCH_POKEMONS,
-    SET_ALL_POKEMONS_DATA,
-    SET_POKEMONS
+    SET_ALL_POKEMONS_DATA, SET_FILTERS,
+    SET_POKEMONS, SET_POKEMONS_BY_TYPES
 } from "./constants";
 
 const initialState = {
@@ -12,7 +12,9 @@ const initialState = {
     allPokemonsData: [],
     afterSearchData: [],
     displayMode: 'normal',
-    startPosition: 0
+    startPosition: 0,
+    filters: [],
+    filtersData: []
 }
 
 
@@ -49,6 +51,9 @@ const pokemonReducer = (state = initialState, action) =>{
                 case 'search':
                     pokemons = state.afterSearchData
                     break
+                case 'filters':
+                    pokemons = state.filtersData
+                    break
                 default:
                     pokemons = state.allPokemonsData
             }
@@ -56,11 +61,16 @@ const pokemonReducer = (state = initialState, action) =>{
             let currentPage = []
             console.log('reducer start position', startPosition)
             console.log('reducer quantity', quantity)
+            console.log('display mode', state.displayMode)
 
 
             for(let i = 0; i <quantity; ++i){
-                if(pokemons[startPosition+i])
-                    currentPage.push(pokemons[startPosition+i])
+                if(pokemons[startPosition+i]) {
+                    if (pokemons[startPosition+i].name)
+                        currentPage.push(pokemons[startPosition + i])
+                    else
+                        currentPage.push(pokemons[startPosition + i])
+                }
             }
             console.log('reducer currentPagePocemons', currentPage)
 
@@ -82,6 +92,20 @@ const pokemonReducer = (state = initialState, action) =>{
             return {
                 ...state,
                 startPosition: action.payload
+            }
+        }
+        case SET_FILTERS:{
+            return {
+                ...state,
+                filters: action.payload
+
+            }
+        }
+        case SET_POKEMONS_BY_TYPES:{
+            // console.log('отфильтрованные покесоны в редюсере', action.payload)
+            return {
+                ...state,
+                filtersData: action.payload
             }
         }
         default:{

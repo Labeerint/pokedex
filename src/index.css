@@ -37,14 +37,6 @@ code {
   display: flex;
 }
 
-.filters{
-  height: 90vh;
-  width: 300px;
-  background: #094453;
-  border-radius: 10px;
-  margin-right: 10px;
-}
-
 .pokemons{
   padding: 10px;
   background: #094453;
@@ -154,4 +146,31 @@ code {
   border-radius: 5px;
   padding: 5px;
   outline: none;
+}
+
+.filters{
+  width: 190px;
+  background: #094453;
+  border-radius: 10px;
+  margin-right: 10px;
+  padding: 10px;
+}
+
+.filtersItem{
+    width: 170px;
+    height: 30px;
+    border-radius: 5px;
+    background: #009688;
+    display: flex;
+    align-items: center;
+  margin-top: 10px;
+  padding: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 600 ;
+}
+
+.filtersCheckBox{
+  margin-right: 5px;
+  cursor: pointer;
 }
