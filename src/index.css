@@ -98,7 +98,6 @@ code {
 
 .pagination{
   border-radius: 10px;
-  width: 150px;
   height: 50px;
   background: #006E60;
   display: flex;
@@ -117,10 +116,11 @@ code {
   color: #fff;
   font-size: 25px;
   cursor: pointer;
+  margin: 0 5px;
 }
 
 .paginationItemActive{
-  background: #309E90;
+  background: #073642;
   font-weight: 600;
 }
 

@@ -25,7 +25,7 @@ export const fetchData = () => dispatch =>{
             dispatch(setAllPokemonsData(data.results))
         })
         .then(()=>{
-            dispatch(changeStartPosition(0))
+            dispatch(changeStartPosition(0,1))
             dispatch(displayPokemons(0, 10))
         })
 }
@@ -104,9 +104,9 @@ export const changeDisplayMode = (type) =>({
     payload: type
 })
 
-export const changeStartPosition = (startPosition) =>({
+export const changeStartPosition = (startPosition, activePage) =>({
     type: CHANGE_START_POSITION,
-    payload: startPosition
+    payload: {startPosition, activePage}
 })
 
 

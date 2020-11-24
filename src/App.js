@@ -25,6 +25,7 @@ function App() {
     const [searchItem, setSearchItem] = React.useState('')
     const [currentType, setCurrentType] = React.useState([])
     const startPosition = useSelector((pokemonReducer)=> pokemonReducer.startPosition)
+    const numberOfPages = useSelector((pokemonReducer)=>pokemonReducer.numberOfPages )
     const quantity = [10, 20, 50]
 
     React.useEffect(()=> {
@@ -61,7 +62,7 @@ function App() {
       console.log(newSearchItem)
         setSearchItem(newSearchItem)
       if(newSearchItem === ''){
-          dispatch(changeStartPosition(0))
+          dispatch(changeStartPosition(0,1))
           dispatch(changeDisplayMode('normal'))
           dispatch(displayPokemons(0,currentQuantity))
       } else{
@@ -79,8 +80,12 @@ function App() {
 
     const nextPage = (newPage) =>{
       let currentPage = startPosition + newPage
+        if(startPosition >= numberOfPages*currentQuantity - currentQuantity)
+            currentPage = startPosition
       console.log('new start position', currentPage)
-        dispatch(changeStartPosition(currentPage))
+      console.log('numberOfPages', numberOfPages)
+        console.log('limit', numberOfPages*currentQuantity - currentQuantity)
+        dispatch(changeStartPosition(currentPage, ++activePage))
         dispatch(displayPokemons(currentPage, currentQuantity))
     }
 
@@ -90,8 +95,14 @@ function App() {
              currentPage = startPosition - newPage
          }
         console.log('new start position', currentPage)
-        dispatch(changeStartPosition(currentPage))
+        dispatch(changeStartPosition(currentPage, --activePage))
         dispatch(displayPokemons(currentPage, currentQuantity))
+    }
+
+    const onPage = (thePage) =>{
+      let currentPage = --thePage * step
+        dispatch(changeStartPosition(currentPage, ++thePage))
+        dispatch((displayPokemons(currentPage, currentQuantity)))
     }
 
 
@@ -102,7 +113,8 @@ function App() {
 
     const pokemons = useSelector((pokemonReducer)=> pokemonReducer.pokemons)
     const filters = useSelector((pokemonReducer)=>pokemonReducer.filters)
-    console.log('filters', filters)
+    let activePage = useSelector((pokemonReducer)=>pokemonReducer.activePage)
+    console.log('activePage', activePage)
     // const afterSearchData = useSelector((pokemonReducer)=>pokemonReducer.afterSearchData)
     // console.log('afterSearchData', afterSearchData)
 
@@ -135,6 +147,9 @@ function App() {
           <Pagination step={step}
                       onPrevious={(newPage)=>previousPage(newPage)}
                       onNext={(newPage)=>nextPage(newPage)}
+                      onPage={(thePage)=>onPage(thePage)}
+                      numberOfPages={numberOfPages}
+                      activePage={activePage}
           />
       </div>
     </div>

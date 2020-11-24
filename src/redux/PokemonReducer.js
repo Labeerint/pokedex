@@ -1,7 +1,7 @@
 import {
     CHANGE_DISPLAY_MODE,
     CHANGE_START_POSITION,
-    DISPLAY_POKEMONS,
+    DISPLAY_POKEMONS, EXPAND_NUMBER_OF_PAGES,
     SEARCH_POKEMONS,
     SET_ALL_POKEMONS_DATA, SET_FILTERS,
     SET_POKEMONS, SET_POKEMONS_BY_TYPES
@@ -14,7 +14,9 @@ const initialState = {
     displayMode: 'normal',
     startPosition: 0,
     filters: [],
-    filtersData: []
+    filtersData: [],
+    numberOfPages: 0,
+    activePage: 1
 }
 
 
@@ -58,6 +60,8 @@ const pokemonReducer = (state = initialState, action) =>{
                     pokemons = state.allPokemonsData
             }
 
+
+
             let currentPage = []
             console.log('reducer start position', startPosition)
             console.log('reducer quantity', quantity)
@@ -76,7 +80,9 @@ const pokemonReducer = (state = initialState, action) =>{
 
             return{
                 ...state,
-                pokemons: currentPage
+                pokemons: currentPage,
+                numberOfPages: Math.ceil(pokemons.length/quantity),
+                activePage: 1+ Math.ceil(startPosition/quantity)
             }
         }
         case CHANGE_DISPLAY_MODE:{
@@ -84,6 +90,7 @@ const pokemonReducer = (state = initialState, action) =>{
             return {
                 ...state,
                 startPosition: 0,
+                activePage: 1,
                 displayMode: action.payload
             }
         }
@@ -91,7 +98,8 @@ const pokemonReducer = (state = initialState, action) =>{
             console.log('change start position', state.startPosition)
             return {
                 ...state,
-                startPosition: action.payload
+                startPosition: action.payload.startPosition,
+                activePage: action.payload.activePage
             }
         }
         case SET_FILTERS:{
