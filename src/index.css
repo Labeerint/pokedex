@@ -28,6 +28,7 @@ code {
   padding: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .home{
@@ -129,4 +130,28 @@ code {
 .paginationItemActive{
   background: #309E90;
   font-weight: 600;
+}
+
+.search{
+  border-radius: 10px;
+  width: 310px;
+  height: 50px;
+  background: #006E60;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}
+
+.searchTitle{
+  text-transform: uppercase;
+}
+
+.searchInput{
+  height: 30px;
+  border: none;
+  background: #009688;
+  border-radius: 5px;
+  padding: 5px;
+  outline: none;
 }

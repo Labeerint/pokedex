@@ -1,6 +1,7 @@
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import axios from 'axios'
+import {displayPokemons} from "../redux/PokemonAction";
 
 const PokemonCard = ({name}) =>{
     let [currentPokemon, setCurrentPokemon] = React.useState(null)
@@ -16,6 +17,7 @@ const PokemonCard = ({name}) =>{
     return(
         <div className='card'>
             <img src={currentPokemon && currentPokemon.sprites.front_default} alt=""/>
+            <span>{currentPokemon && currentPokemon.id}</span>
             <h2 className="name">{name}</h2>
             {
                 currentPokemon &&
