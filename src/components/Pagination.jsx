@@ -1,45 +1,29 @@
 import React from 'react'
 import classNames from 'classnames'
 
-const Pagination = ({onNext, onPrevious, step, onPage, numberOfPages, activePage}) => {
+const Pagination = ({onNext, onPrevious, onPage, numberOfPages, activePage}) => {
     let buttons = []
-    let i =1
-    let limit = 10
-    console.log('i', i)
-    console.log('numberOfPages', numberOfPages)
-    console.log('activePage', activePage)
-
-
     const changePage = (i) =>{
         onPage(i)
     }
 
-    if(activePage>=10){
-        for(let i =activePage-9; i <= numberOfPages && i < activePage+10; ++i){
-            buttons.push(<button key={i}
-                                 className={classNames(
-                                     'paginationItem',
-                                     i === activePage ? 'paginationItemActive' : '')}
-                                 onClick={(e)=>changePage(i)}
-            >{i}</button>)
-        }
-    } else{
-        for(let i =1; i <= numberOfPages && i<20; ++i){
-            buttons.push(<button key={i}
-                                 className={classNames(
-                                     'paginationItem',
-                                     i === activePage ? 'paginationItemActive' : '')}
-                                 onClick={(e)=>changePage(i)}
-            >{i}</button>)
+    if( window.innerWidth >= 600 ){
+        if(activePage>=5){
+            for(let i =activePage-4; i <= numberOfPages && i < activePage+5; ++i){
+                buttons.push(<button key={i} className={classNames('paginationItem w6', i === activePage ? 'paginationItemActive' : '')} onClick={(e)=>changePage(i)}>{i}</button>)
+            }
+        } else{
+            for(let i =1; i <= numberOfPages && i<10; ++i){
+                buttons.push(<button key={i} className={classNames('paginationItem w6', i === activePage ? 'paginationItemActive' : '')} onClick={(e)=>changePage(i)}>{i}</button>)
+            }
         }
     }
 
-
     return(
         <div className='pagination'>
-            <button onClick={()=>onPrevious(step)} className='paginationItem'>сюда</button>
-            {buttons}
-            <button onClick={()=>onNext(step)} className='paginationItem'>туда</button>
+            <button onClick={onPrevious} className='paginationItem'>&lt;</button>
+            {buttons.length!==0 && buttons}
+            <button onClick={onNext} className='paginationItem'>&gt;</button>
         </div>
     )
 }

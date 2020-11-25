@@ -1,10 +1,10 @@
 import {
     CHANGE_DISPLAY_MODE,
     CHANGE_START_POSITION,
-    DISPLAY_POKEMONS, EXPAND_NUMBER_OF_PAGES,
+    DISPLAY_POKEMONS,
     SEARCH_POKEMONS,
     SET_ALL_POKEMONS_DATA, SET_FILTERS,
-    SET_POKEMONS, SET_POKEMONS_BY_TYPES
+    SET_POKEMONS_BY_TYPES
 } from "./constants";
 
 const initialState = {
@@ -23,14 +23,7 @@ const initialState = {
 
 const pokemonReducer = (state = initialState, action) =>{
     switch (action.type) {
-        case SET_POKEMONS:{
-            return {
-                ...state,
-                pokemons: action.payload
-            }
-        }
         case SET_ALL_POKEMONS_DATA:{
-            console.log('сработал редюсер', action.payload)
             return {
                 ...state,
                 allPokemonsData: action.payload
@@ -38,7 +31,6 @@ const pokemonReducer = (state = initialState, action) =>{
         }
         case SEARCH_POKEMONS:{
             let filtration = state.allPokemonsData.filter((pokemon)=>pokemon.name.includes(action.payload))
-            console.log('filtration', filtration)
             return {
                 ...state,
                 afterSearchData: filtration
@@ -48,7 +40,7 @@ const pokemonReducer = (state = initialState, action) =>{
             const startPosition = action.payload.startPosition
             const quantity = action.payload.quantity
             let pokemons;
-
+            let currentPage = []
             switch (state.displayMode) {
                 case 'search':
                     pokemons = state.afterSearchData
@@ -60,23 +52,11 @@ const pokemonReducer = (state = initialState, action) =>{
                     pokemons = state.allPokemonsData
             }
 
-
-
-            let currentPage = []
-            console.log('reducer start position', startPosition)
-            console.log('reducer quantity', quantity)
-            console.log('display mode', state.displayMode)
-
-
             for(let i = 0; i <quantity; ++i){
                 if(pokemons[startPosition+i]) {
-                    if (pokemons[startPosition+i].name)
-                        currentPage.push(pokemons[startPosition + i])
-                    else
-                        currentPage.push(pokemons[startPosition + i])
+                    currentPage.push(pokemons[startPosition + i])
                 }
             }
-            console.log('reducer currentPagePocemons', currentPage)
 
             return{
                 ...state,
@@ -86,7 +66,6 @@ const pokemonReducer = (state = initialState, action) =>{
             }
         }
         case CHANGE_DISPLAY_MODE:{
-            console.log('display mode', state.displayMode)
             return {
                 ...state,
                 startPosition: 0,
@@ -95,7 +74,6 @@ const pokemonReducer = (state = initialState, action) =>{
             }
         }
         case CHANGE_START_POSITION:{
-            console.log('change start position', state.startPosition)
             return {
                 ...state,
                 startPosition: action.payload.startPosition,
@@ -110,7 +88,6 @@ const pokemonReducer = (state = initialState, action) =>{
             }
         }
         case SET_POKEMONS_BY_TYPES:{
-            // console.log('отфильтрованные покесоны в редюсере', action.payload)
             return {
                 ...state,
                 filtersData: action.payload

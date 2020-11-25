@@ -13,10 +13,95 @@ code {
     monospace;
 }
 
+a{
+  color: #000;
+  text-decoration: none;
+}
+
 *{
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+.type{
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  width: 100%;
+  padding: 5px;
+}
+
+.fighting{
+  background: #B41515;
+}
+
+.flying{
+  background: #82CFFF;
+}
+
+.normal{
+  background: #006E60;
+}
+
+.poison{
+  background: #028102;
+}
+
+.ground{
+  background: #814C17;
+}
+
+.rock{
+  background: #7C817C;
+}
+
+.bug{
+  background: #810065;
+}
+
+.ghost{
+  background: #9DD9C0;
+}
+
+.steel{
+  background: #C7D9D9;
+}
+
+.fire{
+  background: #FF0008;
+}
+
+.water{
+  background: #0004FF;
+}
+
+.grass{
+  background: #48FF00;
+}
+
+.electric{
+  background: #3762FF;
+}
+
+.psychic{
+  background: #FF64AF;
+}
+
+.ice{
+  background: #FFF;
+}
+
+.dragon{
+  background: #EAFF00;
+}
+
+.dark{
+  background: #3E3F3E;
+}
+
+.fairy{
+  background: #FF0088;
 }
 
 .header{
@@ -29,20 +114,22 @@ code {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .home{
   padding: 10px;
   background: #073642;
   display: flex;
+  /*width: 500px;*/
 }
 
 .pokemons{
+  width: 100%;
   padding: 10px;
   background: #094453;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
   border-radius: 10px;
 }
 
@@ -55,6 +142,8 @@ code {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .quantity{
@@ -94,6 +183,19 @@ code {
   padding: 10px;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.pokemonPage{
+  padding: 10px;
+  background: #073642;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding-bottom: 50px;
 }
 
 .pagination{
@@ -173,4 +275,49 @@ code {
 .filtersCheckBox{
   margin-right: 5px;
   cursor: pointer;
+}
+
+@media screen and (max-width: 720px) {
+
+  .header{
+    height: 200px;
+    flex-direction: column;
+  }
+
+  .home{
+    flex-direction: column;
+  }
+
+  .filters{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .filtersItem{
+    width: 100px;
+  }
+
+  .pokemons{
+    justify-content: space-around;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .w6{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 350px){
+  .header{
+    height: 240px;
+  }
+
+  .search{
+    flex-direction: column;
+    width: 100%;
+    height: 80px;
+  }
 }

@@ -5,24 +5,16 @@ import {
     DISPLAY_POKEMONS,
     SEARCH_POKEMONS,
     SET_ALL_POKEMONS_DATA, SET_FILTERS,
-    SET_POKEMONS, SET_POKEMONS_BY_TYPES
+    SET_POKEMONS_BY_TYPES
 } from "./constants";
 
 
-// export const fetchPokemons = (limit, page) => dispatch => {
-//     console.log('limit', limit)
-//     console.log('page', page)
-//     axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${page}`)                  // получаем массив данных с именами покемонов
-//         .then(({data})=>{
-//             dispatch(setPokemons(data.results))                                 // засовываем их в стейт
-//             return data
-//         })
-// }
-
 export const fetchData = () => dispatch =>{
+    let pokemonNames = []
     axios.get(`https://pokeapi.co/api/v2/pokemon?limit=1050`)
         .then(({data})=>{
-            dispatch(setAllPokemonsData(data.results))
+            data.results.forEach(pokemon => pokemonNames.push(pokemon.name))
+            dispatch(setAllPokemonsData(pokemonNames))
         })
         .then(()=>{
             dispatch(changeStartPosition(0,1))
@@ -39,33 +31,18 @@ export const fetchTypes = () => dispatch =>{
 
 export const fetchPokemonsByTypes =  (types, currentQuantity) => dispatch =>{
     let unique = new Set();
-
-    console.log(types)
     types.forEach(type =>{
         axios.get(`https://pokeapi.co/api/v2/type/${type}`)
                 .then(({data})=>{
-                    // console.log('type:', type)
                     for(let pok of data.pokemon)
                     {
                         unique.add(pok.pokemon.name)
                     }
-                    // console.log('отфильтрованные покесоны в экшене', unique)
                     let uniqueArr = Array.from(unique)
-                    // console.log('uniqueArr',uniqueArr)
                     dispatch(setPokemonsByTypes(uniqueArr))
-                    dispatch(changeDisplayMode('filters'))
                     dispatch(displayPokemons(0, currentQuantity))
                 })
     })
-    // for(let i=0;i<types.length;++i){
-    //
-    // }
-
-    // let uniqueArr = Array.from(unique)
-    // console.log('uniqueArr',uniqueArr)
-    // dispatch(setPokemonsByTypes(uniqueArr))
-    // dispatch(changeDisplayMode('filters'))
-    // dispatch(displayPokemons(0,10))
 
 }
 
@@ -82,11 +59,6 @@ export const setFilters = (filters) =>({
 export const displayPokemons = (startPosition, quantity, type) =>({
     type: DISPLAY_POKEMONS,
     payload: {startPosition, quantity, type}
-})
-
-export const setPokemons = (pokemons) =>({
-    type: SET_POKEMONS,
-    payload: pokemons
 })
 
 export const setAllPokemonsData = (currentPagePokemons) =>({

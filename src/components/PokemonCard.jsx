@@ -1,29 +1,32 @@
 import React from 'react'
-import {useDispatch, useSelector} from "react-redux";
 import axios from 'axios'
-import {displayPokemons} from "../redux/PokemonAction";
+import {Link} from "react-router-dom";
+import classNames from 'classnames'
 
 const PokemonCard = ({name}) =>{
     let [currentPokemon, setCurrentPokemon] = React.useState(null)
 
-    let dispatch = useDispatch()
     React.useEffect(()=>{
         axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
             .then(({data})=>{
                 setCurrentPokemon(data)
             })
-    },[])
+    },[name])
 
     return(
-        <div className='card'>
-            <img src={currentPokemon && currentPokemon.sprites.front_default} alt=""/>
-            <span>{currentPokemon && currentPokemon.id}</span>
-            <h2 className="name">{name}</h2>
-            {
-                currentPokemon &&
-                    currentPokemon.types.map(types => <span key={types.type.name}>{types.type.name}</span>)
-            }
-        </div>
+        <Link to={`/pokemon/${name}`}>
+            <div className='card'>
+                <img src={currentPokemon && currentPokemon.sprites.front_default} alt=""/>
+                <span>{currentPokemon && currentPokemon.id}</span>
+                <h1 className="name">{name}</h1>
+                {
+                    currentPokemon &&
+                        currentPokemon.types.map(types => <span className={classNames(types.type.name, 'type')}
+                                                                key={types.type.name}
+                        >{types.type.name}</span>)
+                }
+            </div>
+        </Link>
     )
 }
 
