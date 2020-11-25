@@ -1,14 +1,15 @@
 import React from 'react'
 import classNames from 'classnames'
+import store from "../store";
 
-const Quantity = ({quantity, onCahngeQuantity, currentQuantity}) => {
+const Quantity = () => {
     return(
         <div className='quantity'>
-            {quantity.map((item, index) => <span key={index}
-                                                 onClick={()=>onCahngeQuantity(item)}
+            {store.quantity.map((item, index) => <span key={index}
+                                                 onClick={()=>store.changeCurrentQuantity(item)}
                                                  className={classNames(
                                                      'quantityItem',
-                                                        currentQuantity === item ? 'quantityItemActive' : ''
+                                                        store.currentQuantity === item ? 'quantityItemActive' : ''
                                                  )}
             >{item}</span>)}
         </div>

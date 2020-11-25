@@ -30,7 +30,7 @@ const pokemonReducer = (state = initialState, action) =>{
             }
         }
         case SEARCH_POKEMONS:{
-            let filtration = state.allPokemonsData.filter((pokemon)=>pokemon.name.includes(action.payload))
+            let filtration = state.allPokemonsData.filter((pokemon)=>pokemon.includes(action.payload))
             return {
                 ...state,
                 afterSearchData: filtration
