@@ -7,6 +7,8 @@ class Store {
     currentQuantity = 10
     allPokemonsData = []
     afterSearchData = []
+    cleanFilters = false
+    searchValue = ''
     numberOfPages = 0
     startPosition = 0
     selectTypes = []
@@ -14,6 +16,7 @@ class Store {
     activePage = 1
     pokemons = []
     filters = []
+
 
     constructor() {
         makeAutoObservable(this)
@@ -35,12 +38,13 @@ class Store {
     }
 
     onSearchInput(searchRequest){
-        if(searchRequest === ''){
+        this.searchValue = searchRequest
+        if(this.searchValue === ''){
             this.displayMode = 'normal'
             this.displayPokemons(0, this.currentQuantity)
         } else{
             this.displayMode = 'search'
-            this.afterSearchData = this.allPokemonsData.filter((pokemon)=>pokemon.includes(searchRequest))
+            this.afterSearchData = this.allPokemonsData.filter((pokemon)=>pokemon.includes(this.searchValue))
             this.displayPokemons(0, this.currentQuantity)
         }
     }
@@ -86,8 +90,9 @@ class Store {
                 this.allPokemonsData = pokemonNames
             })
             .then(()=>{
+                    this.displayMode ='normal'
                     this.activePage = 1;
-                    this.displayPokemons(0,10)
+                    this.displayPokemons(0,this.currentQuantity)
 
 
             })
@@ -98,23 +103,30 @@ class Store {
             let currentPage = []
             switch (this.displayMode) {
                 case 'search':
+                    this.cleanFilters = true
+                    this.selectTypes = []
                     pokemons = this.afterSearchData
                     break
                 case 'filters':
+                    this.cleanFilters = false
+                    this.searchValue = ''
                     pokemons = this.filtersData
                     break
                 default:
+                    this.selectTypes = []
+                    this.cleanFilters = true
+                    this.searchValue = ''
                     pokemons = this.allPokemonsData
             }
 
-            for(let i = 0; i <this.currentQuantity; ++i){
-                if(pokemons[this.startPosition+i]) {
-                    currentPage.push(pokemons[this.startPosition + i])
+            for(let i = 0; i <quant; ++i){
+                if(pokemons[startPos+i]) {
+                    currentPage.push(pokemons[startPos + i])
                 }
             }
                 this.pokemons = currentPage
-                this.numberOfPages = Math.ceil(pokemons.length/this.currentQuantity)
-                this.activePage = 1+ Math.ceil(this.startPosition/this.currentQuantity)
+                this.numberOfPages = Math.ceil(pokemons.length/quant)
+                this.activePage = 1+ Math.ceil(startPos/quant)
     }
 
     fetchTypes(){

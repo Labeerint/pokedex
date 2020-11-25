@@ -1,12 +1,13 @@
 import React from 'react'
 import classNames from 'classnames'
 import store from "../store";
+import {observer} from "mobx-react";
 
-const Pagination = () => {
+const Pagination = observer(() => {
     let buttons = []
-    const changePage = (i) =>{
-        store.onPage(i)
-    }
+    const changePage = (i) =>{store.onPage(i)}
+    const previousPage = () =>{store.previousPage()}
+    const nextPage = () =>{store.nextPage()}
 
     if( window.innerWidth >= 600 ){
         if(store.activePage>=5){
@@ -22,11 +23,11 @@ const Pagination = () => {
 
     return(
         <div className='pagination'>
-            <button onClick={store.previousPage.bind(store)} className='paginationItem'>&lt;</button>
+            <button onClick={previousPage} className='paginationItem'>&lt;</button>
             {buttons.length!==0 && buttons}
-            <button onClick={store.nextPage.bind(store)} className='paginationItem'>&gt;</button>
+            <button onClick={nextPage} className='paginationItem'>&gt;</button>
         </div>
     )
-}
+})
 
 export default Pagination

@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from "axios";
 import {Link} from "react-router-dom";
+import load from "../assets/load.gif";
 
 
 
@@ -22,7 +23,7 @@ const PokemonPage = ({match}) =>{
                 </Link>
             </div>
             <div className='pokemonPage'>
-                <img src={currentPokemon && currentPokemon.sprites.front_default} alt=""/>
+                <img src={currentPokemon ? currentPokemon.sprites.front_default : load} alt=""/>
                 <h1 className="name">{name}</h1>
                 <h2>Height: {currentPokemon && currentPokemon.height}</h2>
                 <h2>Weight: {currentPokemon && currentPokemon.weight}</h2>

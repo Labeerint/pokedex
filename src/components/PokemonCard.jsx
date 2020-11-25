@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import {Link} from "react-router-dom";
 import classNames from 'classnames'
+import load from '../assets/load.gif'
 
 const PokemonCard = ({name}) =>{
     let [currentPokemon, setCurrentPokemon] = React.useState(null)
@@ -16,7 +17,7 @@ const PokemonCard = ({name}) =>{
     return(
         <Link to={`/pokemon/${name}`}>
             <div className='card'>
-                <img src={currentPokemon && currentPokemon.sprites.front_default} alt=""/>
+                <img className='pokemonImg' src={currentPokemon ? currentPokemon.sprites.front_default : load}/>
                 <span>{currentPokemon && currentPokemon.id}</span>
                 <h1 className="name">{name}</h1>
                 {

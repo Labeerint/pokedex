@@ -198,6 +198,11 @@ a{
   padding-bottom: 50px;
 }
 
+.pokemonImg{
+  max-width: 100%;
+  max-height: 96px;
+}
+
 .pagination{
   border-radius: 10px;
   height: 50px;

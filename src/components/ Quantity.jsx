@@ -1,8 +1,9 @@
 import React from 'react'
 import classNames from 'classnames'
 import store from "../store";
+import {observer} from "mobx-react";
 
-const Quantity = () => {
+const Quantity = observer(() => {
     return(
         <div className='quantity'>
             {store.quantity.map((item, index) => <span key={index}
@@ -14,6 +15,6 @@ const Quantity = () => {
             >{item}</span>)}
         </div>
     )
-}
+})
 
 export default Quantity
